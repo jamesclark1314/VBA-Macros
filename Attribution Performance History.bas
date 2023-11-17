@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module5"
+Attribute VB_Name = "Module1"
 ' Set global variables
 Dim summary_workbook As Workbook
 Dim history_workbook As Workbook
@@ -29,17 +29,20 @@ End Sub
 Sub transfer_abs_data()
     Dim ws As Worksheet
     For Each ws In summary_workbook.Worksheets
-        ' Select returns from the port column and transpose / paste to history workbook
-        'TTF
-        ws.Range("D7:D37").copy
-        history_workbook.Worksheets("ABS Performance").Range("B4").PasteSpecial Transpose:=True, Paste:=xlPasteValues
-        history_workbook.Worksheets("ABS Performance").Range("A4").Value = ws.Name
-'        'GMS
-'        ws.Range("J7:J37").copy
-'        'NIF
-'        ws.Range("P7:P37").copy
-'        'STB
-'        ws.Range("V7:V37").copy
+        If ws.Visible = xlSheetVisible Then
+            ' Select returns from the port column and transpose / paste to history workbook
+            'TTF
+            ws.Range("D7:D37").copy
+            history_workbook.Worksheets("ABS Performance").Range("B4").PasteSpecial Transpose:=True, Paste:=xlPasteValues
+            ' Label the row with the corresponding worksheet name
+            history_workbook.Worksheets("ABS Performance").Range("A4").Value = ws.Name
+    '        'GMS
+    '        ws.Range("J7:J37").copy
+    '        'NIF
+    '        ws.Range("P7:P37").copy
+    '        'STB
+    '        ws.Range("V7:V37").copy
+        End If
     Next ws
 End Sub
 
